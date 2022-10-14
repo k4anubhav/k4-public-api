@@ -9,3 +9,8 @@ spotipy==2.20.0
 python-dotenv~=0.21.0
 Pillow==9.2.0
 requests~=2.28.1
+
+
+whitenoise
+uvicorn
+gunicorn
