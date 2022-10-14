@@ -1,6 +1,6 @@
 from PIL import Image
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, resolve_url
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, RetrieveAPIView
 from rest_framework.request import Request
@@ -31,22 +31,17 @@ class SpotifyCallbackView(GenericAPIView):
         code = client.auth_manager.get_authorization_code(url)
         client.auth_manager.get_access_token(code)
         token: SpotifyToken = client.get_spotify_token()
-        return Response(
-            {
-                'auth_id': token.id,
-            },
-            status=status.HTTP_201_CREATED
-        )
+        return redirect(resolve_url('current-track-banner', auth_id=token.id))
 
 
 class CurrentTrackView(SpotifyClientMixin, RetrieveAPIView):
     serializer_class = CurrentTrackSerializer
 
     def get_object(self):
-        track = self.client.current_user_playing_track()
-        if not track:
+        current_track = self.client.current_user_playing_track()
+        if not current_track:
             raise NoTrackPlaying
-        return track
+        return current_track
 
 
 class CurrentTrackBannerView(SpotifyClientMixin, GenericAPIView):
@@ -62,3 +57,11 @@ class CurrentTrackBannerView(SpotifyClientMixin, GenericAPIView):
         # noinspection PyTypeChecker
         banner.save(response, 'PNG')
         return response
+
+
+class CurrentTrackRedirectView(SpotifyClientMixin, GenericAPIView):
+    def get(self, request):
+        current_track = self.client.current_user_playing_track()
+        if current_track:
+            return redirect(current_track.external_urls['spotify'])
+        return Response(status=status.HTTP_204_NO_CONTENT)
