@@ -60,6 +60,8 @@ class CurrentTrackBannerView(SpotifyClientMixin, GenericAPIView):
 
         response = HttpResponse(content_type='image/png')
         response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
         # noinspection PyTypeChecker
         banner.save(response, 'PNG')
         return response
