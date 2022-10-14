@@ -56,7 +56,7 @@ class CurrentTrackBannerView(SpotifyClientMixin, GenericAPIView):
         if track:
             banner = SpotifyBanner(track).banner
         else:
-            banner = Image.open('NotListning.png')
+            banner = Image.open('doc/spotify/NotListening.png')
 
         response = HttpResponse(content_type='image/png')
         # noinspection PyTypeChecker
