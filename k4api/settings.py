@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+from django.utils.log import DEFAULT_LOGGING
 
 load_dotenv()
 
@@ -29,6 +30,8 @@ SECRET_KEY = "django-insecure-^=$s_9a6i7yf&0@#0@+wut##cl^+m+brn*0p)@m$a5z&lkow@)
 DEBUG = True
 
 ALLOWED_HOSTS = [os.environ["WEBSITE_HOSTNAME"]] if os.environ.get("WEBSITE_HOSTNAME") else []
+
+DEFAULT_LOGGING['handlers']['console']['filters'] = []
 
 # Application definition
 
