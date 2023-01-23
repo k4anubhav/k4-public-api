@@ -7,7 +7,8 @@ import sys
 def main():
     """Run administrative tasks."""
 
-    settings_module = 'k4api.production' if 'PROD' in os.environ else 'k4api.settings'
+    settings_module = 'k4api.settings' if str(
+        os.environ.get('PROD')).lower() == 'false' in os.environ else 'k4api.production'
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
 
     try:
