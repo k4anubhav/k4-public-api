@@ -6,7 +6,7 @@ wheel==0.37.1
 
 djangorestframework==3.14.0
 
-git+https://github.com/k4anubhav/django-spotify-banner
+git+https://github.com/k4anubhav/spotify-banner
 git+https://github.com/k4anubhav/django-sworker-linkedin
 
 whitenoise
