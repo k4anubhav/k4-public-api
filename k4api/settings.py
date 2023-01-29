@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
 from django.utils.log import DEFAULT_LOGGING
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -29,7 +29,17 @@ SECRET_KEY = "django-insecure-^=$s_9a6i7yf&0@#0@+wut##cl^+m+brn*0p)@m$a5z&lkow@)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ["WEBSITE_HOSTNAME"]] if os.environ.get("WEBSITE_HOSTNAME") else []
+ALLOWED_HOSTS = list(
+    map(str.strip, os.environ['WEBSITE_HOSTNAME'].split(','))
+) if os.environ.get("WEBSITE_HOSTNAME") else []
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
+    "https://k4anubhav.com",
+]
 
 DEFAULT_LOGGING['handlers']['console']['filters'] = []
 
@@ -43,6 +53,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    "corsheaders",
+
     'rest_framework',
     'spotify_banner',
     'linkedin_sworker',
@@ -50,6 +62,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -130,7 +143,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
