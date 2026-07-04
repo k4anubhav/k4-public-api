@@ -1,0 +1,11 @@
+Django
+wheel
+
+djangorestframework
+django-cors-headers
+
+git+https://github.com/k4anubhav/spotify-banner
+
+whitenoise
+uvicorn
+gunicorn

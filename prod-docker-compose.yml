@@ -1,0 +1,20 @@
+services:
+  k4api-backend:
+    extends:
+      file: docker-compose.yml
+      service: k4api-backend
+
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./static/:/var/www/static/
+      - ./media/:/var/www/media/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./certbot/data/:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt/
+    depends_on:
+      - k4api-backend

@@ -1,0 +1,18 @@
+services:
+  k4api-backend:
+    build:
+      context: ./k4api
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py migrate 
+      && python manage.py collectstatic --noinput
+      && gunicorn --config '/app/conf/gunicorn_conf_docker.py' WellTest.wsgi:application"
+    restart: always
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    volumes:
+      - ./media:/app/media
+      - ./static:/app/static
+      - ./logs:/app/logs
