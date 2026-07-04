@@ -6,7 +6,7 @@ services:
     command: >
       sh -c "python manage.py migrate 
       && python manage.py collectstatic --noinput
-      && gunicorn --config '/app/conf/gunicorn_conf_docker.py' WellTest.wsgi:application"
+      && gunicorn --config '/app/conf/gunicorn_conf_docker.py' k4api.wsgi:application"
     restart: always
     ports:
       - "8080:8080"
