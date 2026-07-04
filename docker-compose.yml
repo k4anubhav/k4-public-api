@@ -13,7 +13,7 @@ services:
     expose:
       - "8080"
     volumes:
-      - ./data/db.sqlite3:/app/db.sqlite3
+      - ./data:/app/data
       - ./media:/app/media
       - ./static:/app/static
       - ./logs:/app/logs
