@@ -28,6 +28,7 @@ WORKDIR /app/
 RUN mkdir -p /app/static
 RUN mkdir -p /app/media
 RUN mkdir -p /app/logs
+RUN mkdir -p /app/data
 
 ENV PORT 8080
 EXPOSE 8080
